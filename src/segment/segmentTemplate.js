@@ -175,6 +175,7 @@ export const segmentsFromTemplate = (attributes, segmentTimeline) => {
       map: mapSegment,
       number: segment.number,
       presentationTime,
+      templateValues,
       attributes
     };
 
