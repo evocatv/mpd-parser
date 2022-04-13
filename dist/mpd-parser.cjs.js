@@ -1574,6 +1574,7 @@ var segmentsFromTemplate = function segmentsFromTemplate(attributes, segmentTime
       number: segment.number,
       presentationTime: presentationTime,
       templateValues: templateValues,
+      segment: segment,
       attributes: attributes
     };
     return map;
