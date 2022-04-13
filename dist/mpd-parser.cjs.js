@@ -1573,6 +1573,7 @@ var segmentsFromTemplate = function segmentsFromTemplate(attributes, segmentTime
       map: mapSegment,
       number: segment.number,
       presentationTime: presentationTime,
+      templateValues: templateValues,
       attributes: attributes
     };
     return map;
