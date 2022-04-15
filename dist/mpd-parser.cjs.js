@@ -3,6 +3,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var path = require('path');
 var resolveUrl = require('@videojs/vhs-utils/cjs/resolve-url');
 var window = require('global/window');
 var mediaGroups = require('@videojs/vhs-utils/cjs/media-groups');
@@ -11,6 +12,7 @@ var xmldom = require('@xmldom/xmldom');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
 var resolveUrl__default = /*#__PURE__*/_interopDefaultLegacy(resolveUrl);
 var window__default = /*#__PURE__*/_interopDefaultLegacy(window);
 var decodeB64ToUint8Array__default = /*#__PURE__*/_interopDefaultLegacy(decodeB64ToUint8Array);
@@ -1034,6 +1036,9 @@ var formatVideoPlaylist = function formatVideoPlaylist(_ref3) {
     // targetDuration: attributes.duration,
     // discontinuityStarts,
     timelineStarts: attributes.timelineStarts,
+    representationID: segments[0]['templateValues']['RepresentationID'],
+    assetFileExt: path__default["default"].extname(segments[0]['uri']),
+    initFileExt: path__default["default"].extname(segments[0]['map']['uri']),
     initUri: segments[0]['map']['uri'],
     initResolvedUri: segments[0]['map']['resolvedUri'],
     segments: segments
@@ -1195,6 +1200,9 @@ var toM3u8 = function toM3u8(_ref7) {
     spreadAudioGroup.push.apply(spreadAudioGroup, Object.values(organizedAudioGroup));
     spreadAudioGroup.forEach(function (e) {
       manifest.playlists.push({
+        representationID: e.playlists[0]['segments'][0]['templateValues']['RepresentationID'],
+        'assetFileExt': path__default["default"].extname(e.playlists[0]['segments'][0]['uri']),
+        'initFileExt': path__default["default"].extname(e.playlists[0]['segments'][0]['map']['uri']),
         'initResolvedUri': e.playlists[0]['segments'][0]['map']['resolvedUri'],
         'initUri': e.playlists[0]['segments'][0]['map']['uri'],
         'segments': e.playlists[0]['segments']

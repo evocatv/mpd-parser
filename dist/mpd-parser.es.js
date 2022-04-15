@@ -1,4 +1,5 @@
 /*! @name mpd-parser @version 0.21.1 @license Apache-2.0 */
+import path from 'path';
 import resolveUrl from '@videojs/vhs-utils/es/resolve-url';
 import window from 'global/window';
 import { forEachMediaGroup } from '@videojs/vhs-utils/es/media-groups';
@@ -1024,6 +1025,9 @@ var formatVideoPlaylist = function formatVideoPlaylist(_ref3) {
     // targetDuration: attributes.duration,
     // discontinuityStarts,
     timelineStarts: attributes.timelineStarts,
+    representationID: segments[0]['templateValues']['RepresentationID'],
+    assetFileExt: path.extname(segments[0]['uri']),
+    initFileExt: path.extname(segments[0]['map']['uri']),
     initUri: segments[0]['map']['uri'],
     initResolvedUri: segments[0]['map']['resolvedUri'],
     segments: segments
@@ -1185,6 +1189,9 @@ var toM3u8 = function toM3u8(_ref7) {
     spreadAudioGroup.push.apply(spreadAudioGroup, Object.values(organizedAudioGroup));
     spreadAudioGroup.forEach(function (e) {
       manifest.playlists.push({
+        representationID: e.playlists[0]['segments'][0]['templateValues']['RepresentationID'],
+        'assetFileExt': path.extname(e.playlists[0]['segments'][0]['uri']),
+        'initFileExt': path.extname(e.playlists[0]['segments'][0]['map']['uri']),
         'initResolvedUri': e.playlists[0]['segments'][0]['map']['resolvedUri'],
         'initUri': e.playlists[0]['segments'][0]['map']['uri'],
         'segments': e.playlists[0]['segments']

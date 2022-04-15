@@ -1,3 +1,4 @@
+import path from 'path';
 import { values } from './utils/object';
 import { findIndex, findIndexes } from './utils/list';
 import { addSidxSegmentsToPlaylist as addSidxSegmentsToPlaylist_ } from './segment/segmentBase';
@@ -293,6 +294,9 @@ export const formatVideoPlaylist = ({
     // targetDuration: attributes.duration,
     // discontinuityStarts,
     timelineStarts: attributes.timelineStarts,
+    representationID: segments[0]['templateValues']['RepresentationID'],
+    assetFileExt: path.extname(segments[0]['uri']),
+    initFileExt: path.extname(segments[0]['map']['uri']),
     initUri: segments[0]['map']['uri'],
     initResolvedUri: segments[0]['map']['resolvedUri'],
     segments
@@ -456,7 +460,8 @@ export const toM3u8 = ({
     let spreadAudioGroup = [];
     spreadAudioGroup.push(...Object.values(organizedAudioGroup));
     spreadAudioGroup.forEach(e => {
-      manifest.playlists.push({ 'initResolvedUri': e.playlists[0]['segments'][0]['map']['resolvedUri'], 'initUri': e.playlists[0]['segments'][0]['map']['uri'], 'segments': e.playlists[0]['segments'] });
+
+      manifest.playlists.push({ representationID: e.playlists[0]['segments'][0]['templateValues']['RepresentationID'], 'assetFileExt': path.extname(e.playlists[0]['segments'][0]['uri']), 'initFileExt': path.extname(e.playlists[0]['segments'][0]['map']['uri']), 'initResolvedUri': e.playlists[0]['segments'][0]['map']['resolvedUri'], 'initUri': e.playlists[0]['segments'][0]['map']['uri'], 'segments': e.playlists[0]['segments'] });
     });
   }
 

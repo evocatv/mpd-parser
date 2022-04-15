@@ -1,9 +1,13 @@
 /*! @name mpd-parser @version 0.21.1 @license Apache-2.0 */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@xmldom/xmldom')) :
-  typeof define === 'function' && define.amd ? define(['exports', '@xmldom/xmldom'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.mpdParser = {}, global.window));
-})(this, (function (exports, xmldom) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('path'), require('@xmldom/xmldom')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'path', '@xmldom/xmldom'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.mpdParser = {}, global.path, global.window));
+})(this, (function (exports, path, xmldom) { 'use strict';
+
+  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+  var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
 
   var version = "0.21.1";
 
@@ -1274,6 +1278,9 @@
       // targetDuration: attributes.duration,
       // discontinuityStarts,
       timelineStarts: attributes.timelineStarts,
+      representationID: segments[0]['templateValues']['RepresentationID'],
+      assetFileExt: path__default["default"].extname(segments[0]['uri']),
+      initFileExt: path__default["default"].extname(segments[0]['map']['uri']),
       initUri: segments[0]['map']['uri'],
       initResolvedUri: segments[0]['map']['resolvedUri'],
       segments: segments
@@ -1435,6 +1442,9 @@
       spreadAudioGroup.push.apply(spreadAudioGroup, Object.values(organizedAudioGroup));
       spreadAudioGroup.forEach(function (e) {
         manifest.playlists.push({
+          representationID: e.playlists[0]['segments'][0]['templateValues']['RepresentationID'],
+          'assetFileExt': path__default["default"].extname(e.playlists[0]['segments'][0]['uri']),
+          'initFileExt': path__default["default"].extname(e.playlists[0]['segments'][0]['map']['uri']),
           'initResolvedUri': e.playlists[0]['segments'][0]['map']['resolvedUri'],
           'initUri': e.playlists[0]['segments'][0]['map']['uri'],
           'segments': e.playlists[0]['segments']
