@@ -1104,8 +1104,7 @@
   var formatAudioPlaylist = function formatAudioPlaylist(_ref, isAudioOnly) {
     var attributes = _ref.attributes,
         segments = _ref.segments,
-        sidx = _ref.sidx,
-        mediaSequence = _ref.mediaSequence;
+        sidx = _ref.sidx;
     var playlist = {
       // attributes: {
       //   NAME: attributes.id,
@@ -1121,7 +1120,7 @@
       // discontinuitySequence,
       // discontinuityStarts,
       timelineStarts: attributes.timelineStarts,
-      mediaSequence: mediaSequence,
+      // mediaSequence,
       segments: segments
     }; // if (attributes.contentProtection) {
     //   playlist.contentProtection = attributes.contentProtection;
@@ -1142,8 +1141,7 @@
     var _m3u8Attributes;
 
     var attributes = _ref2.attributes,
-        segments = _ref2.segments,
-        mediaSequence = _ref2.mediaSequence;
+        segments = _ref2.segments;
 
     if (typeof segments === 'undefined') {
       // vtt tracks may use single file in BaseURL
@@ -1177,7 +1175,7 @@
       // timelineStarts: attributes.timelineStarts,
       // discontinuityStarts,
       // discontinuitySequence,
-      mediaSequence: mediaSequence,
+      // mediaSequence,
       segments: segments
     };
   };
@@ -1339,8 +1337,8 @@
   var addMediaSequenceValues = function addMediaSequenceValues(playlists, timelineStarts) {
     // increment all segments sequentially
     playlists.forEach(function (playlist) {
-      playlist.mediaSequence = 0; // playlist.discontinuitySequence = findIndex(timelineStarts, ({ timeline }) => timeline === playlist.timeline);
-
+      // playlist.mediaSequence = 0;
+      // playlist.discontinuitySequence = findIndex(timelineStarts, ({ timeline }) => timeline === playlist.timeline);
       if (!playlist.segments) {
         return;
       }
@@ -1756,7 +1754,7 @@
       var timescale = attributes.timescale || 1; // - if presentationTimeOffset isn't present on any level, default to 0
 
       var presentationTimeOffset = attributes.presentationTimeOffset || 0;
-      // Even if the @t attribute is not specified for the segment, segment.time is
+      var presentationTime = // Even if the @t attribute is not specified for the segment, segment.time is
       // calculated in mpd-parser prior to this, so it's assumed to be available.
       attributes.periodStart + (segment.time - presentationTimeOffset) / timescale;
       var map = {
@@ -1766,9 +1764,9 @@
         resolvedUri: resolveUrl(attributes.baseUrl || '', uri),
         map: mapSegment,
         number: segment.number,
-        // presentationTime,
-        // templateValues,
-        // segment,
+        presentationTime: presentationTime,
+        templateValues: templateValues,
+        segment: segment,
         attributes: attributes
       };
       return map;

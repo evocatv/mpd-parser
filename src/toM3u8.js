@@ -84,7 +84,7 @@ export const formatAudioPlaylist = ({
   attributes,
   segments,
   sidx,
-  mediaSequence,
+  // mediaSequence,
   // discontinuitySequence,
   // discontinuityStarts
 }, isAudioOnly) => {
@@ -103,7 +103,7 @@ export const formatAudioPlaylist = ({
     // discontinuitySequence,
     // discontinuityStarts,
     timelineStarts: attributes.timelineStarts,
-    mediaSequence,
+    // mediaSequence,
     segments
   };
 
@@ -126,7 +126,7 @@ export const formatAudioPlaylist = ({
 export const formatVttPlaylist = ({
   attributes,
   segments,
-  mediaSequence,
+  // mediaSequence,
   // discontinuityStarts,
   // discontinuitySequence
 }) => {
@@ -162,7 +162,7 @@ export const formatVttPlaylist = ({
     // timelineStarts: attributes.timelineStarts,
     // discontinuityStarts,
     // discontinuitySequence,
-    mediaSequence,
+    // mediaSequence,
     segments
   };
 };
@@ -349,7 +349,7 @@ const vttOnly = ({ attributes }) =>
 export const addMediaSequenceValues = (playlists, timelineStarts) => {
   // increment all segments sequentially
   playlists.forEach((playlist) => {
-    playlist.mediaSequence = 0;
+    // playlist.mediaSequence = 0;
     // playlist.discontinuitySequence = findIndex(timelineStarts, ({ timeline }) => timeline === playlist.timeline);
 
     if (!playlist.segments) {

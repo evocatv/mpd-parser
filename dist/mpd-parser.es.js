@@ -854,8 +854,7 @@ var addSidxSegmentsToPlaylists = function addSidxSegmentsToPlaylists(playlists, 
 var formatAudioPlaylist = function formatAudioPlaylist(_ref, isAudioOnly) {
   var attributes = _ref.attributes,
       segments = _ref.segments,
-      sidx = _ref.sidx,
-      mediaSequence = _ref.mediaSequence;
+      sidx = _ref.sidx;
   var playlist = {
     // attributes: {
     //   NAME: attributes.id,
@@ -871,7 +870,7 @@ var formatAudioPlaylist = function formatAudioPlaylist(_ref, isAudioOnly) {
     // discontinuitySequence,
     // discontinuityStarts,
     timelineStarts: attributes.timelineStarts,
-    mediaSequence: mediaSequence,
+    // mediaSequence,
     segments: segments
   }; // if (attributes.contentProtection) {
   //   playlist.contentProtection = attributes.contentProtection;
@@ -892,8 +891,7 @@ var formatVttPlaylist = function formatVttPlaylist(_ref2) {
   var _m3u8Attributes;
 
   var attributes = _ref2.attributes,
-      segments = _ref2.segments,
-      mediaSequence = _ref2.mediaSequence;
+      segments = _ref2.segments;
 
   if (typeof segments === 'undefined') {
     // vtt tracks may use single file in BaseURL
@@ -927,7 +925,7 @@ var formatVttPlaylist = function formatVttPlaylist(_ref2) {
     // timelineStarts: attributes.timelineStarts,
     // discontinuityStarts,
     // discontinuitySequence,
-    mediaSequence: mediaSequence,
+    // mediaSequence,
     segments: segments
   };
 };
@@ -1089,8 +1087,8 @@ var vttOnly = function vttOnly(_ref6) {
 var addMediaSequenceValues = function addMediaSequenceValues(playlists, timelineStarts) {
   // increment all segments sequentially
   playlists.forEach(function (playlist) {
-    playlist.mediaSequence = 0; // playlist.discontinuitySequence = findIndex(timelineStarts, ({ timeline }) => timeline === playlist.timeline);
-
+    // playlist.mediaSequence = 0;
+    // playlist.discontinuitySequence = findIndex(timelineStarts, ({ timeline }) => timeline === playlist.timeline);
     if (!playlist.segments) {
       return;
     }
@@ -1506,7 +1504,7 @@ var segmentsFromTemplate = function segmentsFromTemplate(attributes, segmentTime
     var timescale = attributes.timescale || 1; // - if presentationTimeOffset isn't present on any level, default to 0
 
     var presentationTimeOffset = attributes.presentationTimeOffset || 0;
-    // Even if the @t attribute is not specified for the segment, segment.time is
+    var presentationTime = // Even if the @t attribute is not specified for the segment, segment.time is
     // calculated in mpd-parser prior to this, so it's assumed to be available.
     attributes.periodStart + (segment.time - presentationTimeOffset) / timescale;
     var map = {
@@ -1516,9 +1514,9 @@ var segmentsFromTemplate = function segmentsFromTemplate(attributes, segmentTime
       resolvedUri: resolveUrl(attributes.baseUrl || '', uri),
       map: mapSegment,
       number: segment.number,
-      // presentationTime,
-      // templateValues,
-      // segment,
+      presentationTime: presentationTime,
+      templateValues: templateValues,
+      segment: segment,
       attributes: attributes
     };
     return map;
