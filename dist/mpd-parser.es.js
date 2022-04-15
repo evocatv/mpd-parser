@@ -1187,7 +1187,7 @@ var toM3u8 = function toM3u8(_ref7) {
       manifest.playlists.push({
         'initResolvedUri': e.playlists[0]['segments'][0]['map']['resolvedUri'],
         'initUri': e.playlists[0]['segments'][0]['map']['uri'],
-        'segments': e.playlists
+        'segments': e.playlists[0]['segments']
       });
     });
   } // if (organizedVttGroup) {
@@ -1504,7 +1504,7 @@ var segmentsFromTemplate = function segmentsFromTemplate(attributes, segmentTime
     var timescale = attributes.timescale || 1; // - if presentationTimeOffset isn't present on any level, default to 0
 
     var presentationTimeOffset = attributes.presentationTimeOffset || 0;
-    var presentationTime = // Even if the @t attribute is not specified for the segment, segment.time is
+    // Even if the @t attribute is not specified for the segment, segment.time is
     // calculated in mpd-parser prior to this, so it's assumed to be available.
     attributes.periodStart + (segment.time - presentationTimeOffset) / timescale;
     var map = {
@@ -1514,7 +1514,6 @@ var segmentsFromTemplate = function segmentsFromTemplate(attributes, segmentTime
       resolvedUri: resolveUrl(attributes.baseUrl || '', uri),
       map: mapSegment,
       number: segment.number,
-      presentationTime: presentationTime,
       templateValues: templateValues,
       segment: segment,
       attributes: attributes

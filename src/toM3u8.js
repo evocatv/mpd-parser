@@ -456,7 +456,7 @@ export const toM3u8 = ({
     let spreadAudioGroup = [];
     spreadAudioGroup.push(...Object.values(organizedAudioGroup));
     spreadAudioGroup.forEach(e => {
-      manifest.playlists.push({ 'initResolvedUri': e.playlists[0]['segments'][0]['map']['resolvedUri'], 'initUri': e.playlists[0]['segments'][0]['map']['uri'], 'segments': e.playlists });
+      manifest.playlists.push({ 'initResolvedUri': e.playlists[0]['segments'][0]['map']['resolvedUri'], 'initUri': e.playlists[0]['segments'][0]['map']['uri'], 'segments': e.playlists[0]['segments'] });
     });
   }
 
