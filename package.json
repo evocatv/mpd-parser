@@ -19,11 +19,10 @@
     "build": "npm-run-all -s clean -p build:*",
     "build:js": "rollup -c scripts/rollup.config.js",
     "clean": "shx rm -rf ./dist ./test/dist && shx mkdir -p ./dist ./test/dist",
-    "lint": "vjsstandard",
     "prepublishOnly": "npm-run-all build-prod && vjsverify --verbose",
     "start": "npm-run-all -p server watch",
     "server": "karma start scripts/karma.conf.js --singleRun=false --auto-watch",
-    "test": "npm-run-all lint build-test && npm-run-all test:*",
+    "test": "npm-run-all build-test && npm-run-all test:*",
     "test:browser": "karma start scripts/karma.conf.js",
     "test:node": "qunit test/dist/bundle-node.js",
     "posttest": "shx cat test/dist/coverage/text.txt",
@@ -63,6 +62,7 @@
   "devDependencies": {
     "@rollup/plugin-replace": "^2.3.4",
     "@videojs/generator-helpers": "~2.0.1",
+    "axios": "^0.26.1",
     "jsdom": "^16.4.0",
     "karma": "^5.2.3",
     "rollup": "^2.36.1",
@@ -70,8 +70,7 @@
     "sinon": "^9.2.3",
     "videojs-generate-karma-config": "~7.0.0",
     "videojs-generate-rollup-config": "^6.2.2",
-    "videojs-generator-verify": "~3.0.2",
-    "videojs-standard": "^9.0.1"
+    "videojs-generator-verify": "~3.0.2"
   },
   "generator-videojs-plugin": {
     "version": "7.7.3"
@@ -79,14 +78,5 @@
   "browserslist": [
     "defaults",
     "ie 11"
-  ],
-  "lint-staged": {
-    "*.js": "vjsstandard --fix",
-    "README.md": "doctoc --notitle"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  }
+  ]
 }
