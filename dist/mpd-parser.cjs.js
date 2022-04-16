@@ -1041,6 +1041,8 @@ var formatVideoPlaylist = function formatVideoPlaylist(_ref3) {
     initFileExt: path__default["default"].extname(segments[0]['map']['uri']),
     initUri: segments[0]['map']['uri'],
     initResolvedUri: segments[0]['map']['resolvedUri'],
+    segmentTemplateMedia: attributes.media,
+    segmentTemplateInit: attributes.initialization.sourceURL,
     segments: segments
   }; // if (attributes.contentProtection) {
   //   playlist.contentProtection = attributes.contentProtection;
@@ -1205,7 +1207,9 @@ var toM3u8 = function toM3u8(_ref7) {
         'initFileExt': path__default["default"].extname(e.playlists[0]['segments'][0]['map']['uri']),
         'initResolvedUri': e.playlists[0]['segments'][0]['map']['resolvedUri'],
         'initUri': e.playlists[0]['segments'][0]['map']['uri'],
-        'segments': e.playlists[0]['segments']
+        'segments': e.playlists[0]['segments'],
+        'segmentTemplateMedia': e.playlists[0]['segments'][0]['attributes']['media'],
+        'segmentTemplateInit': e.playlists[0]['segments'][0]['attributes']['initialization']['sourceURL']
       });
     });
   } // if (organizedVttGroup) {

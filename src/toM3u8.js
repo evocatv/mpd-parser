@@ -299,6 +299,8 @@ export const formatVideoPlaylist = ({
     initFileExt: path.extname(segments[0]['map']['uri']),
     initUri: segments[0]['map']['uri'],
     initResolvedUri: segments[0]['map']['resolvedUri'],
+    segmentTemplateMedia: attributes.media,
+    segmentTemplateInit: attributes.initialization.sourceURL,
     segments
   };
 
@@ -461,7 +463,7 @@ export const toM3u8 = ({
     spreadAudioGroup.push(...Object.values(organizedAudioGroup));
     spreadAudioGroup.forEach(e => {
 
-      manifest.playlists.push({ representationID: e.playlists[0]['segments'][0]['templateValues']['RepresentationID'], 'assetFileExt': path.extname(e.playlists[0]['segments'][0]['uri']), 'initFileExt': path.extname(e.playlists[0]['segments'][0]['map']['uri']), 'initResolvedUri': e.playlists[0]['segments'][0]['map']['resolvedUri'], 'initUri': e.playlists[0]['segments'][0]['map']['uri'], 'segments': e.playlists[0]['segments'] });
+      manifest.playlists.push({ representationID: e.playlists[0]['segments'][0]['templateValues']['RepresentationID'], 'assetFileExt': path.extname(e.playlists[0]['segments'][0]['uri']), 'initFileExt': path.extname(e.playlists[0]['segments'][0]['map']['uri']), 'initResolvedUri': e.playlists[0]['segments'][0]['map']['resolvedUri'], 'initUri': e.playlists[0]['segments'][0]['map']['uri'], 'segments': e.playlists[0]['segments'], 'segmentTemplateMedia': e.playlists[0]['segments'][0]['attributes']['media'], 'segmentTemplateInit': e.playlists[0]['segments'][0]['attributes']['initialization']['sourceURL'] });
     });
   }
 
