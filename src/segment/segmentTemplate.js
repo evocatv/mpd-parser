@@ -30,7 +30,7 @@ const identifierPattern = /\$([A-z]*)(?:(%0)([0-9]+)d)?\$/g;
  *
  * @param {Obect} values
  *        Object containing values that shall be used to replace known identifiers
- * @param {number} values.RepresentationID
+ * @param {number} values.representationId
  *        Value of the Representation@id attribute
  * @param {number} values.Number
  *        Number of the corresponding segment
@@ -53,8 +53,8 @@ export const identifierReplacement = (values) => (match, identifier, format, wid
 
   const value = '' + values[identifier];
 
-  if (identifier === 'RepresentationID') {
-    // Format tag shall not be present with RepresentationID
+  if (identifier === 'representationId') {
+    // Format tag shall not be present with representationId
     return value;
   }
 
@@ -78,7 +78,7 @@ export const identifierReplacement = (values) => (match, identifier, format, wid
  *        Template string to construct url from
  * @param {Obect} values
  *        Object containing values that shall be used to replace known identifiers
- * @param {number} values.RepresentationID
+ * @param {number} values.representationId
  *        Value of the Representation@id attribute
  * @param {number} values.Number
  *        Number of the corresponding segment
@@ -138,7 +138,7 @@ export const parseTemplateInfo = (attributes, segmentTimeline) => {
  */
 export const segmentsFromTemplate = (attributes, segmentTimeline) => {
   const templateValues = {
-    RepresentationID: attributes.id,
+    representationId: attributes.id,
     Bandwidth: attributes.bandwidth || 0
   };
 
