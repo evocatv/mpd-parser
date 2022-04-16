@@ -294,7 +294,7 @@ export const formatVideoPlaylist = ({
     // targetDuration: attributes.duration,
     // discontinuityStarts,
     timelineStarts: attributes.timelineStarts,
-    representationId: segments[0]['templateValues']['representationId'],
+    RepresentationID: segments[0]['templateValues']['RepresentationID'],
     assetFileExt: path.extname(segments[0]['uri']),
     initFileExt: path.extname(segments[0]['map']['uri']),
     initUri: segments[0]['map']['uri'],
@@ -463,7 +463,7 @@ export const toM3u8 = ({
     spreadAudioGroup.push(...Object.values(organizedAudioGroup));
     spreadAudioGroup.forEach(e => {
 
-      manifest.playlists.push({ representationId: e.playlists[0]['segments'][0]['templateValues']['representationId'], 'assetFileExt': path.extname(e.playlists[0]['segments'][0]['uri']), 'initFileExt': path.extname(e.playlists[0]['segments'][0]['map']['uri']), 'initResolvedUri': e.playlists[0]['segments'][0]['map']['resolvedUri'], 'initUri': e.playlists[0]['segments'][0]['map']['uri'], 'segments': e.playlists[0]['segments'], 'segmentTemplateMedia': e.playlists[0]['segments'][0]['attributes']['media'], 'segmentTemplateInit': e.playlists[0]['segments'][0]['attributes']['initialization']['sourceURL'] });
+      manifest.playlists.push({ RepresentationID: e.playlists[0]['segments'][0]['templateValues']['RepresentationID'], 'assetFileExt': path.extname(e.playlists[0]['segments'][0]['uri']), 'initFileExt': path.extname(e.playlists[0]['segments'][0]['map']['uri']), 'initResolvedUri': e.playlists[0]['segments'][0]['map']['resolvedUri'], 'initUri': e.playlists[0]['segments'][0]['map']['uri'], 'segments': e.playlists[0]['segments'], 'segmentTemplateMedia': e.playlists[0]['segments'][0]['attributes']['media'], 'segmentTemplateInit': e.playlists[0]['segments'][0]['attributes']['initialization']['sourceURL'] });
     });
   }
 

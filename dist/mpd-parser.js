@@ -1278,7 +1278,7 @@
       // targetDuration: attributes.duration,
       // discontinuityStarts,
       timelineStarts: attributes.timelineStarts,
-      representationId: segments[0]['templateValues']['representationId'],
+      RepresentationID: segments[0]['templateValues']['RepresentationID'],
       assetFileExt: path__default["default"].extname(segments[0]['uri']),
       initFileExt: path__default["default"].extname(segments[0]['map']['uri']),
       initUri: segments[0]['map']['uri'],
@@ -1444,7 +1444,7 @@
       spreadAudioGroup.push.apply(spreadAudioGroup, Object.values(organizedAudioGroup));
       spreadAudioGroup.forEach(function (e) {
         manifest.playlists.push({
-          representationId: e.playlists[0]['segments'][0]['templateValues']['representationId'],
+          RepresentationID: e.playlists[0]['segments'][0]['templateValues']['RepresentationID'],
           'assetFileExt': path__default["default"].extname(e.playlists[0]['segments'][0]['uri']),
           'initFileExt': path__default["default"].extname(e.playlists[0]['segments'][0]['map']['uri']),
           'initResolvedUri': e.playlists[0]['segments'][0]['map']['resolvedUri'],
@@ -1633,7 +1633,7 @@
    *
    * @param {Obect} values
    *        Object containing values that shall be used to replace known identifiers
-   * @param {number} values.representationId
+   * @param {number} values.RepresentationID
    *        Value of the Representation@id attribute
    * @param {number} values.Number
    *        Number of the corresponding segment
@@ -1658,8 +1658,8 @@
 
       var value = '' + values[identifier];
 
-      if (identifier === 'representationId') {
-        // Format tag shall not be present with representationId
+      if (identifier === 'RepresentationID') {
+        // Format tag shall not be present with RepresentationID
         return value;
       }
 
@@ -1683,7 +1683,7 @@
    *        Template string to construct url from
    * @param {Obect} values
    *        Object containing values that shall be used to replace known identifiers
-   * @param {number} values.representationId
+   * @param {number} values.RepresentationID
    *        Value of the Representation@id attribute
    * @param {number} values.Number
    *        Number of the corresponding segment
@@ -1745,7 +1745,7 @@
 
   var segmentsFromTemplate = function segmentsFromTemplate(attributes, segmentTimeline) {
     var templateValues = {
-      representationId: attributes.id,
+      RepresentationID: attributes.id,
       Bandwidth: attributes.bandwidth || 0
     };
     var _attributes$initializ = attributes.initialization,
