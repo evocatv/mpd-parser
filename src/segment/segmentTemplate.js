@@ -169,12 +169,11 @@ export const segmentsFromTemplate = (attributes, segmentTimeline) => {
 
     const map = {
       uri,
-      timeline: segment.timeline,
-      duration: segment.duration,
+      // timeline: segment.timeline,
+      // duration: segment.duration,
       resolvedUri: resolveUrl(attributes.baseUrl || '', uri),
       map: mapSegment,
       number: segment.number,
-      presentationTime,
       templateValues,
       segment,
       attributes

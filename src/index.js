@@ -4,7 +4,7 @@ import { toPlaylists } from './toPlaylists';
 import { inheritAttributes } from './inheritAttributes';
 import { stringToMpdXml } from './stringToMpdXml';
 import { parseUTCTimingScheme } from './parseUTCTimingScheme';
-import {addSidxSegmentsToPlaylist} from './segment/segmentBase.js';
+import { addSidxSegmentsToPlaylist } from './segment/segmentBase.js';
 
 const VERSION = version;
 
@@ -24,6 +24,8 @@ const VERSION = version;
 const parse = (manifestString, options = {}) => {
   const parsedManifestInfo = inheritAttributes(stringToMpdXml(manifestString), options);
   const playlists = toPlaylists(parsedManifestInfo.representationInfo);
+
+
 
   return toM3u8({
     dashPlaylists: playlists,

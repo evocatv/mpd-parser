@@ -1,3 +1,4 @@
+import path from 'path';
 import { values } from './utils/object';
 import { findIndex, findIndexes } from './utils/list';
 import { addSidxSegmentsToPlaylist as addSidxSegmentsToPlaylist_ } from './segment/segmentBase';
@@ -33,25 +34,25 @@ const mergeDiscontiguousPlaylists = playlists => {
 
       // bubble up contentProtection, this assumes all DRM content
       // has the same contentProtection
-      if (playlist.attributes.contentProtection) {
-        acc[name].attributes.contentProtection =
-          playlist.attributes.contentProtection;
-      }
+      // if (playlist.attributes.contentProtection) {
+      //   acc[name].attributes.contentProtection =
+      //     playlist.attributes.contentProtection;
+      // }
     }
 
     acc[name].attributes.timelineStarts.push({
       // Although they represent the same number, it's important to have both to make it
       // compatible with HLS potentially having a similar attribute.
       start: playlist.attributes.periodStart,
-      timeline: playlist.attributes.periodStart
+      // timeline: playlist.attributes.periodStart
     });
 
     return acc;
   }, {}));
 
   return mergedPlaylists.map(playlist => {
-    playlist.discontinuityStarts =
-        findIndexes(playlist.segments || [], 'discontinuity');
+    // playlist.discontinuityStarts =
+    //   findIndexes(playlist.segments || [], 'discontinuity');
 
     return playlist;
   });
@@ -84,32 +85,32 @@ export const formatAudioPlaylist = ({
   attributes,
   segments,
   sidx,
-  mediaSequence,
-  discontinuitySequence,
-  discontinuityStarts
+  // mediaSequence,
+  // discontinuitySequence,
+  // discontinuityStarts
 }, isAudioOnly) => {
   const playlist = {
-    attributes: {
-      NAME: attributes.id,
-      BANDWIDTH: attributes.bandwidth,
-      CODECS: attributes.codecs,
-      ['PROGRAM-ID']: 1
-    },
-    uri: '',
-    endList: attributes.type === 'static',
-    timeline: attributes.periodStart,
-    resolvedUri: '',
-    targetDuration: attributes.duration,
-    discontinuitySequence,
-    discontinuityStarts,
+    // attributes: {
+    //   NAME: attributes.id,
+    //   BANDWIDTH: attributes.bandwidth,
+    //   CODECS: attributes.codecs,
+    //   ['PROGRAM-ID']: 1
+    // },
+    // uri: '',
+    // endList: attributes.type === 'static',
+    // timeline: attributes.periodStart,
+    // resolvedUri: '',
+    // targetDuration: attributes.duration,
+    // discontinuitySequence,
+    // discontinuityStarts,
     timelineStarts: attributes.timelineStarts,
-    mediaSequence,
+    // mediaSequence,
     segments
   };
 
-  if (attributes.contentProtection) {
-    playlist.contentProtection = attributes.contentProtection;
-  }
+  // if (attributes.contentProtection) {
+  //   playlist.contentProtection = attributes.contentProtection;
+  // }
 
   if (sidx) {
     playlist.sidx = sidx;
@@ -126,15 +127,15 @@ export const formatAudioPlaylist = ({
 export const formatVttPlaylist = ({
   attributes,
   segments,
-  mediaSequence,
-  discontinuityStarts,
-  discontinuitySequence
+  // mediaSequence,
+  // discontinuityStarts,
+  // discontinuitySequence
 }) => {
   if (typeof segments === 'undefined') {
     // vtt tracks may use single file in BaseURL
     segments = [{
       uri: attributes.baseUrl,
-      timeline: attributes.periodStart,
+      // timeline: attributes.periodStart,
       resolvedUri: attributes.baseUrl || '',
       duration: attributes.sourceDuration,
       number: 0
@@ -154,15 +155,15 @@ export const formatVttPlaylist = ({
   }
   return {
     attributes: m3u8Attributes,
-    uri: '',
-    endList: attributes.type === 'static',
-    timeline: attributes.periodStart,
+    // uri: '',
+    // endList: attributes.type === 'static',
+    // timeline: attributes.periodStart,
     resolvedUri: attributes.baseUrl || '',
-    targetDuration: attributes.duration,
-    timelineStarts: attributes.timelineStarts,
-    discontinuityStarts,
-    discontinuitySequence,
-    mediaSequence,
+    // targetDuration: attributes.duration,
+    // timelineStarts: attributes.timelineStarts,
+    // discontinuityStarts,
+    // discontinuitySequence,
+    // mediaSequence,
     segments
   };
 };
@@ -189,7 +190,7 @@ export const organizeAudioPlaylists = (playlists, sidxMapping = {}, isAudioOnly 
         autoselect: true,
         default: role === 'main',
         playlists: [],
-        uri: ''
+        // uri: ''
       };
     }
 
@@ -225,7 +226,7 @@ export const organizeVttPlaylists = (playlists, sidxMapping = {}) => {
         default: false,
         autoselect: false,
         playlists: [],
-        uri: ''
+        // uri: ''
       };
     }
     a[label].playlists.push(addSidxSegmentsToPlaylist(formatVttPlaylist(playlist), sidxMapping));
@@ -271,34 +272,41 @@ export const formatVideoPlaylist = ({
   attributes,
   segments,
   sidx,
-  discontinuityStarts
+  // discontinuityStarts
 }) => {
   const playlist = {
-    attributes: {
-      NAME: attributes.id,
-      AUDIO: 'audio',
-      SUBTITLES: 'subs',
-      RESOLUTION: {
-        width: attributes.width,
-        height: attributes.height
-      },
-      CODECS: attributes.codecs,
-      BANDWIDTH: attributes.bandwidth,
-      ['PROGRAM-ID']: 1
-    },
-    uri: '',
-    endList: attributes.type === 'static',
-    timeline: attributes.periodStart,
-    resolvedUri: '',
-    targetDuration: attributes.duration,
-    discontinuityStarts,
+    // attributes: {
+    //   NAME: attributes.id,
+    //   AUDIO: 'audio',
+    //   SUBTITLES: 'subs',
+    //   RESOLUTION: {
+    //     width: attributes.width,
+    //     height: attributes.height
+    //   },
+    //   CODECS: attributes.codecs,
+    //   BANDWIDTH: attributes.bandwidth,
+    //   ['PROGRAM-ID']: 1
+    // },
+    // uri: '',
+    // endList: attributes.type === 'static',
+    // timeline: attributes.periodStart,
+    // resolvedUri: '',
+    // targetDuration: attributes.duration,
+    // discontinuityStarts,
     timelineStarts: attributes.timelineStarts,
+    RepresentationID: segments[0]['templateValues']['RepresentationID'],
+    assetFileExt: path.extname(segments[0]['uri']),
+    initFileExt: path.extname(segments[0]['map']['uri']),
+    initUri: segments[0]['map']['uri'],
+    initResolvedUri: segments[0]['map']['resolvedUri'],
+    segmentTemplateMedia: attributes.media,
+    segmentTemplateInit: attributes.initialization.sourceURL,
     segments
   };
 
-  if (attributes.contentProtection) {
-    playlist.contentProtection = attributes.contentProtection;
-  }
+  // if (attributes.contentProtection) {
+  //   playlist.contentProtection = attributes.contentProtection;
+  // }
 
   if (sidx) {
     playlist.sidx = sidx;
@@ -347,8 +355,8 @@ const vttOnly = ({ attributes }) =>
 export const addMediaSequenceValues = (playlists, timelineStarts) => {
   // increment all segments sequentially
   playlists.forEach((playlist) => {
-    playlist.mediaSequence = 0;
-    playlist.discontinuitySequence = findIndex(timelineStarts, ({ timeline }) => timeline === playlist.timeline);
+    // playlist.mediaSequence = 0;
+    // playlist.discontinuitySequence = findIndex(timelineStarts, ({ timeline }) => timeline === playlist.timeline);
 
     if (!playlist.segments) {
       return;
@@ -400,23 +408,25 @@ export const toM3u8 = ({
   } = dashPlaylists[0].attributes;
 
   const videoPlaylists = mergeDiscontiguousPlaylists(dashPlaylists.filter(videoOnly)).map(formatVideoPlaylist);
+
   const audioPlaylists = mergeDiscontiguousPlaylists(dashPlaylists.filter(audioOnly));
+
   const vttPlaylists = mergeDiscontiguousPlaylists(dashPlaylists.filter(vttOnly));
   const captions = dashPlaylists.map((playlist) => playlist.attributes.captionServices).filter(Boolean);
 
   const manifest = {
-    allowCache: true,
-    discontinuityStarts: [],
-    segments: [],
-    endList: true,
-    mediaGroups: {
-      AUDIO: {},
-      VIDEO: {},
-      ['CLOSED-CAPTIONS']: {},
-      SUBTITLES: {}
-    },
-    uri: '',
-    duration,
+    // allowCache: true,
+    // discontinuityStarts: [],
+    // segments: [],
+    // endList: true,
+    // mediaGroups: {
+    //   AUDIO: {},
+    //   VIDEO: {},
+    //   ['CLOSED-CAPTIONS']: {},
+    //   SUBTITLES: {}
+    // },
+    // uri: '',
+    // duration,)
     playlists: addSidxSegmentsToPlaylists(videoPlaylists, sidxMapping)
   };
 
@@ -449,16 +459,22 @@ export const toM3u8 = ({
   addMediaSequenceValues(formattedPlaylists, manifest.timelineStarts);
 
   if (organizedAudioGroup) {
-    manifest.mediaGroups.AUDIO.audio = organizedAudioGroup;
+    let spreadAudioGroup = [];
+    spreadAudioGroup.push(...Object.values(organizedAudioGroup));
+    spreadAudioGroup.forEach(e => {
+
+      manifest.playlists.push({ RepresentationID: e.playlists[0]['segments'][0]['templateValues']['RepresentationID'], 'assetFileExt': path.extname(e.playlists[0]['segments'][0]['uri']), 'initFileExt': path.extname(e.playlists[0]['segments'][0]['map']['uri']), 'initResolvedUri': e.playlists[0]['segments'][0]['map']['resolvedUri'], 'initUri': e.playlists[0]['segments'][0]['map']['uri'], 'segments': e.playlists[0]['segments'], 'segmentTemplateMedia': e.playlists[0]['segments'][0]['attributes']['media'], 'segmentTemplateInit': e.playlists[0]['segments'][0]['attributes']['initialization']['sourceURL'] });
+    });
   }
 
-  if (organizedVttGroup) {
-    manifest.mediaGroups.SUBTITLES.subs = organizedVttGroup;
-  }
+  // if (organizedVttGroup) {
+  //   // manifest.mediaGroups.SUBTITLES.subs = organizedVttGroup;
+  //   manifest.playlists.push(organizedVttGroup);
+  // }
 
-  if (captions.length) {
-    manifest.mediaGroups['CLOSED-CAPTIONS'].cc = organizeCaptionServices(captions);
-  }
+  // if (captions.length) {
+  //   manifest.mediaGroups['CLOSED-CAPTIONS'].cc = organizeCaptionServices(captions);
+  // }
 
   if (previousManifest) {
     return positionManifestOnTimeline({
