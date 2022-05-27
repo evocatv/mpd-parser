@@ -1545,7 +1545,8 @@
         time = segmentTime;
       }
 
-      if (segmentTime && segmentTime > time) {
+      if (segmentTime) {
+        //TODO handle undershoot
         // discontinuity
         // TODO: How to handle this type of discontinuity
         // timeline++ here would treat it like HLS discontuity and content would
